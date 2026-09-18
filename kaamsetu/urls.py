@@ -9,6 +9,7 @@ urlpatterns = [
     path("dashboard/worker/", include("apps.workers.urls")),
     path("dashboard/employer/", include("apps.employers.urls")),
     path("jobs/", include("apps.jobs.urls")),
+    path("ml/", include("apps.ml_models.urls")),
 ]
 
 if settings.DEBUG:

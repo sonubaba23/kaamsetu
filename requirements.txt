@@ -11,6 +11,10 @@ Pillow==12.3.0
 # Database (uncomment for PostgreSQL; SQLite is the dev default)
 psycopg2-binary==2.9.13
 
+# Task queue (scheduled ML jobs, e.g. demand forecasting)
+celery==5.6.3
+redis==6.4.0
+
 # ML / DL
 numpy==2.5.3
 pandas==3.0.6

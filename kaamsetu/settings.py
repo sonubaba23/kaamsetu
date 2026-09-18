@@ -5,6 +5,7 @@ Django settings for the KaamSetu project.
 from datetime import timedelta
 from pathlib import Path
 
+from celery.schedules import crontab
 from decouple import Csv, config
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -143,3 +144,20 @@ CORS_ALLOWED_ORIGINS = config(
 ML_MODELS_DIR = BASE_DIR / "ml_artifacts"
 
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+
+# Celery (scheduled ML jobs, e.g. demand forecasting). Run a broker locally with
+# `redis-server`, then `celery -A kaamsetu worker -l info` and
+# `celery -A kaamsetu beat -l info` to execute the schedule below.
+CELERY_BROKER_URL = config("CELERY_BROKER_URL", default="redis://localhost:6379/0")
+CELERY_RESULT_BACKEND = config("CELERY_RESULT_BACKEND", default="redis://localhost:6379/0")
+CELERY_ACCEPT_CONTENT = ["json"]
+CELERY_TASK_SERIALIZER = "json"
+CELERY_RESULT_SERIALIZER = "json"
+CELERY_TIMEZONE = TIME_ZONE
+
+CELERY_BEAT_SCHEDULE = {
+    "update-demand-forecasts-weekly": {
+        "task": "apps.ml_models.tasks.update_all_forecasts_task",
+        "schedule": crontab(day_of_week="monday", hour=2, minute=0),
+    },
+}

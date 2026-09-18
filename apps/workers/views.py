@@ -6,6 +6,7 @@ from django.db.models import Sum
 from django.utils import timezone
 from django.views.generic import TemplateView
 
+from apps.jobs.matching import recommend_jobs_for_worker
 from apps.jobs.models import Booking
 from apps.ml_models.models import TrustScoreLog
 
@@ -20,7 +21,7 @@ class WorkerDashboardView(LoginRequiredMixin, TemplateView):
         ctx["worker"] = worker
 
         bookings = worker.bookings.select_related("job", "job__employer").order_by("-created_at")
-        ctx["job_feed"] = bookings[:8]
+        ctx["job_matches"] = recommend_jobs_for_worker(worker, limit=8)
         ctx["portfolio"] = worker.portfolio.all()[:9]
 
         since = timezone.now() - timedelta(days=180)

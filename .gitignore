@@ -13,6 +13,9 @@ ml_artifacts/
 # Env
 .env
 
+# Celery
+celerybeat-schedule*
+
 # Node
 node_modules/
 
