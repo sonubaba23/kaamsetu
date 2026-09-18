@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Log in — KaamSetu{% endblock %}
+{% block content %}
+<section class="mx-auto flex min-h-[70vh] max-w-md flex-col justify-center px-4 py-16">
+  <div class="reveal glass-card p-8">
+    <p class="chip w-fit">Welcome back</p>
+    <h1 class="mt-4 font-display text-2xl font-bold text-white">Log in to KaamSetu</h1>
+
+    {% if form.errors %}
+    <div class="mt-4 rounded-xl border border-rose-glow/30 bg-rose-glow/10 px-4 py-3 text-sm text-rose-glow">
+      Invalid username or password. Please try again.
+    </div>
+    {% endif %}
+
+    <form method="post" class="mt-6 space-y-4">
+      {% csrf_token %}
+      <div>
+        <label class="mb-1.5 block text-xs font-medium text-white/60">Username</label>
+        <input type="text" name="username" required autofocus
+          class="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white placeholder-white/30 outline-none transition focus:border-cyan-glow/60 focus:bg-white/[0.07]">
+      </div>
+      <div>
+        <label class="mb-1.5 block text-xs font-medium text-white/60">Password</label>
+        <input type="password" name="password" required
+          class="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white placeholder-white/30 outline-none transition focus:border-cyan-glow/60 focus:bg-white/[0.07]">
+      </div>
+      <input type="hidden" name="next" value="{{ next }}">
+      <button type="submit" class="btn-primary w-full">Log in</button>
+    </form>
+
+    <p class="mt-6 text-center text-sm text-white/50">
+      New to KaamSetu?
+      <a href="{% url 'core:register_choice' %}" class="font-medium text-cyan-glow hover:underline">Create an account</a>
+    </p>
+  </div>
+</section>
+{% endblock %}

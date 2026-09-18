@@ -1,0 +1,150 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Employer dashboard — KaamSetu{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<style>
+  .leaflet-container { background: #0a0d16; border-radius: 1.5rem; }
+  .leaflet-control-attribution { background: rgba(10,13,22,0.7) !important; color: rgba(255,255,255,0.4) !important; }
+  .leaflet-control-zoom a { background: rgba(255,255,255,0.06) !important; color: #fff !important; border-color: rgba(255,255,255,0.1) !important; }
+</style>
+{% endblock %}
+
+{% block content %}
+<section class="mx-auto max-w-7xl px-4 py-10">
+
+  <!-- Header -->
+  <div class="reveal flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+    <div>
+      <p class="chip w-fit">
+        <i data-lucide="briefcase" class="h-3.5 w-3.5 text-violet-glow"></i>
+        {{ employer.get_employer_type_display }}
+      </p>
+      <h1 class="mt-3 font-display text-3xl font-bold text-white">Welcome back, {{ request.user.first_name|default:request.user.username }}</h1>
+      <p class="mt-1 text-sm text-white/50">{{ employer.city }}{% if employer.company_name %} &middot; {{ employer.company_name }}{% endif %}</p>
+    </div>
+    <a href="#" class="btn-primary w-fit">
+      <i data-lucide="plus" class="h-4 w-4"></i>
+      Post a job
+    </a>
+  </div>
+
+  <!-- Stats -->
+  <div class="reveal mt-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
+    <div class="glass-card p-6">
+      <p class="text-xs text-white/50">Open jobs</p>
+      <p class="mt-2 font-display text-3xl font-bold text-white">{{ stats.open_jobs }}</p>
+    </div>
+    <div class="glass-card p-6">
+      <p class="text-xs text-white/50">Active crew</p>
+      <p class="mt-2 font-display text-3xl font-bold text-white">{{ stats.active_crew }}</p>
+    </div>
+    <div class="glass-card p-6">
+      <p class="text-xs text-white/50">Total spend</p>
+      <p class="mt-2 font-display text-3xl font-bold text-white">&#8377;{{ stats.total_spend }}</p>
+    </div>
+  </div>
+
+  <!-- Crew management board -->
+  <div class="reveal mt-6 glass-card p-6">
+    <div class="flex items-center justify-between">
+      <p class="text-sm font-semibold text-white">Crew management board</p>
+      <i data-lucide="kanban" class="h-4 w-4 text-cyan-glow"></i>
+    </div>
+    <div class="mt-4 grid gap-4 md:grid-cols-3">
+      {% include "partials/crew_column.html" with title="Requested" icon="clock" color_cls="text-amber-glow" bookings=crew_board.requested %}
+      {% include "partials/crew_column.html" with title="Active" icon="loader" color_cls="text-cyan-glow" bookings=crew_board.active %}
+      {% include "partials/crew_column.html" with title="Completed" icon="check-circle-2" color_cls="text-violet-glow" bookings=crew_board.completed %}
+    </div>
+  </div>
+
+  <!-- Spend analytics + Demand heat map -->
+  <div class="mt-6 grid gap-6 lg:grid-cols-2">
+    <div class="reveal glass-card p-6">
+      <div class="flex items-center justify-between">
+        <p class="text-sm font-semibold text-white">Spend analytics</p>
+        <i data-lucide="wallet" class="h-4 w-4 text-amber-glow"></i>
+      </div>
+      <div class="mt-4 h-64">
+        <canvas id="spendChart"></canvas>
+      </div>
+    </div>
+
+    <div class="reveal glass-card p-6">
+      <div class="flex items-center justify-between">
+        <p class="text-sm font-semibold text-white">Live demand heat map</p>
+        <i data-lucide="map-pinned" class="h-4 w-4 text-violet-glow"></i>
+      </div>
+      <div id="demandMap" class="mt-4 h-64 w-full overflow-hidden rounded-2xl"></div>
+    </div>
+  </div>
+
+  <!-- Booking timeline -->
+  <div class="reveal mt-6 glass-card p-6">
+    <div class="flex items-center justify-between">
+      <p class="text-sm font-semibold text-white">Booking timeline</p>
+      <i data-lucide="history" class="h-4 w-4 text-cyan-glow"></i>
+    </div>
+    <div class="mt-6 space-y-6 border-l border-white/10 pl-6">
+      {% for b in booking_timeline %}
+      <div class="relative">
+        <span class="absolute -left-[27px] top-1 h-3 w-3 rounded-full bg-gradient-to-br from-cyan-glow to-violet-glow"></span>
+        <p class="text-sm font-medium text-white">{{ b.worker }} &middot; {{ b.job.title }}</p>
+        <p class="mt-0.5 text-xs text-white/45">{{ b.get_status_display }} &middot; {{ b.created_at|date:"d M, H:i" }}</p>
+      </div>
+      {% empty %}
+      <p class="text-sm text-white/40">No bookings yet.</p>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.4/chart.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  new Chart(document.getElementById("spendChart"), {
+    type: "bar",
+    data: {
+      labels: {{ spend_labels|safe }},
+      datasets: [{
+        label: "Spend",
+        data: {{ spend_values|safe }},
+        backgroundColor: "rgba(251,191,36,0.55)",
+        borderRadius: 8,
+        maxBarThickness: 28,
+      }],
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        x: { grid: { display: false }, ticks: { color: "rgba(255,255,255,0.4)" } },
+        y: { grid: { color: "rgba(255,255,255,0.06)" }, ticks: { color: "rgba(255,255,255,0.4)" } },
+      },
+      plugins: { legend: { display: false } },
+    },
+  });
+
+  const map = L.map("demandMap", { zoomControl: true, attributionControl: true }).setView([22.9734, 78.6569], 4.2);
+  L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png", {
+    attribution: "&copy; OpenStreetMap &copy; CARTO",
+    maxZoom: 18,
+  }).addTo(map);
+
+  const demandPoints = {{ demand_points_json|safe }};
+  demandPoints.forEach((point) => {
+    L.circle([point.lat, point.lng], {
+      radius: point.radius,
+      color: "#22d3ee",
+      fillColor: "#8b5cf6",
+      fillOpacity: 0.35,
+      weight: 1,
+    }).bindPopup(point.label).addTo(map);
+  });
+});
+</script>
+{% endblock %}

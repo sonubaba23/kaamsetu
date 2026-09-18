@@ -1,0 +1,162 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<!-- HERO -->
+<section class="relative mx-auto max-w-6xl px-4 pt-16 pb-24 sm:pt-24">
+  <div class="reveal mx-auto flex max-w-2xl flex-col items-center text-center">
+    <span class="chip">
+      <i data-lucide="sparkles" class="h-3.5 w-3.5 text-cyan-glow"></i>
+      AI-verified &middot; Escrow-secured &middot; Zero middlemen
+    </span>
+    <h1 class="mt-6 font-display text-4xl font-bold leading-[1.1] tracking-tight text-white sm:text-6xl">
+      Hire skilled hands,
+      <span class="text-gradient">not strangers.</span>
+    </h1>
+    <p class="mt-6 max-w-xl text-balance text-lg text-white/60">
+      KaamSetu connects masons, plumbers, electricians, painters, carpenters and
+      welders directly with the people who need them &mdash; ranked by an AI trust
+      score, verified from real work photos, and paid through secure escrow.
+    </p>
+    <div class="mt-9 flex flex-col gap-3 sm:flex-row">
+      <a href="{% url 'core:register_employer' %}" class="btn-primary">
+        <i data-lucide="search" class="h-4 w-4"></i>
+        Hire verified talent
+      </a>
+      <a href="{% url 'core:register_worker' %}" class="btn-ghost">
+        <i data-lucide="hard-hat" class="h-4 w-4"></i>
+        Join as a worker
+      </a>
+    </div>
+  </div>
+
+  <!-- Floating stat cards -->
+  <div class="reveal mx-auto mt-16 grid max-w-4xl grid-cols-2 gap-4 sm:grid-cols-4">
+    <div class="glass-card px-5 py-6 text-center" data-tilt>
+      <p class="font-display text-3xl font-bold text-white"><span data-counter="{{ stats.workers|default:0 }}">0</span>+</p>
+      <p class="mt-1 text-xs text-white/50">Verified workers</p>
+    </div>
+    <div class="glass-card px-5 py-6 text-center" data-tilt>
+      <p class="font-display text-3xl font-bold text-white"><span data-counter="{{ stats.jobs_completed|default:0 }}">0</span>+</p>
+      <p class="mt-1 text-xs text-white/50">Jobs completed</p>
+    </div>
+    <div class="glass-card px-5 py-6 text-center" data-tilt>
+      <p class="font-display text-3xl font-bold text-white"><span data-counter="{{ stats.cities|default:0 }}">0</span>+</p>
+      <p class="mt-1 text-xs text-white/50">Cities served</p>
+    </div>
+    <div class="glass-card px-5 py-6 text-center" data-tilt>
+      <p class="font-display text-3xl font-bold text-white"><span data-counter="98.6">0</span>%</p>
+      <p class="mt-1 text-xs text-white/50">Escrow success rate</p>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how-it-works" class="mx-auto max-w-6xl px-4 py-20">
+  <div class="reveal mx-auto max-w-xl text-center">
+    <p class="chip mx-auto w-fit">How it works</p>
+    <h2 class="mt-4 font-display text-3xl font-bold text-white sm:text-4xl">From job post to paid, in four steps</h2>
+  </div>
+
+  <div class="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+    {% include "partials/step_card.html" with n="01" icon="file-text" title="Post or search" desc="Describe the job, or search verified workers by trade, city and trust score." %}
+    {% include "partials/step_card.html" with n="02" icon="brain-circuit" title="AI-ranked matches" desc="Our hybrid recommender ranks workers by skill fit, distance, availability and past satisfaction." %}
+    {% include "partials/step_card.html" with n="03" icon="shield-check" title="Book with escrow" desc="Payment is held securely in escrow the moment a booking is confirmed." %}
+    {% include "partials/step_card.html" with n="04" icon="badge-check" title="Complete & get paid" desc="Job is marked done, payment releases instantly, and it builds the worker's permanent digital resume." %}
+  </div>
+</section>
+
+<!-- TRADES -->
+<section id="trades" class="mx-auto max-w-6xl px-4 py-20">
+  <div class="reveal mx-auto max-w-xl text-center">
+    <p class="chip mx-auto w-fit">Trades on KaamSetu</p>
+    <h2 class="mt-4 font-display text-3xl font-bold text-white sm:text-4xl">Every trade, one trusted network</h2>
+  </div>
+
+  <div class="mt-12 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
+    {% for cat in skill_categories %}
+    <a href="{% url 'jobs:job_list' %}?skill={{ cat.slug }}" class="reveal glass-card group flex flex-col items-center gap-3 px-4 py-8 text-center transition hover:-translate-y-1" data-tilt>
+      <span class="grid h-14 w-14 place-items-center rounded-2xl bg-gradient-to-br from-violet-glow/25 to-cyan-glow/25 text-white transition group-hover:from-violet-glow/40 group-hover:to-cyan-glow/40">
+        <i data-lucide="{{ cat.icon }}" class="h-6 w-6"></i>
+      </span>
+      <span class="text-sm font-semibold text-white">{{ cat.name }}</span>
+    </a>
+    {% endfor %}
+  </div>
+</section>
+
+<!-- ML MODULES -->
+<section id="trust" class="mx-auto max-w-6xl px-4 py-20">
+  <div class="reveal mx-auto max-w-2xl text-center">
+    <p class="chip mx-auto w-fit">
+      <i data-lucide="cpu" class="h-3.5 w-3.5 text-violet-glow"></i>
+      What makes it intelligent
+    </p>
+    <h2 class="mt-4 font-display text-3xl font-bold text-white sm:text-4xl">Five ML models working behind every match</h2>
+    <p class="mt-4 text-white/55">Built to remove guesswork from hiring blue-collar talent &mdash; and to protect both sides of the marketplace.</p>
+  </div>
+
+  <div class="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+    {% include "partials/ml_card.html" with icon="gauge" color="cyan" title="Worker Trust Score" desc="Gradient Boosting / Random Forest scores every worker on jobs completed, ratings, cancellations and punctuality." %}
+    {% include "partials/ml_card.html" with icon="scan-search" color="violet" title="Skill Verification" desc="A CNN (ResNet/EfficientNet transfer learning) grades uploaded work photos by trade and quality before a profile goes live." %}
+    {% include "partials/ml_card.html" with icon="route" color="amber" title="Intelligent Job Matching" desc="A hybrid content-based + collaborative recommender ranks workers by fit, distance, availability and satisfaction." %}
+    {% include "partials/ml_card.html" with icon="trending-up" color="cyan" title="Demand Forecasting" desc="LSTM / Prophet models predict which skills will be in demand in which locality, weeks ahead." %}
+    {% include "partials/ml_card.html" with icon="shield-alert" color="rose" title="Fraud & Fake Review Detection" desc="TF-IDF/BERT NLP plus anomaly detection flags fake reviews and suspicious profile behaviour." %}
+    {% include "partials/ml_card.html" with icon="lock" color="violet" title="Escrow-Secured Payments" desc="Funds are held until job completion is confirmed by both sides &mdash; never paid up front, never withheld unfairly." %}
+  </div>
+</section>
+
+{% if top_workers %}
+<!-- FEATURED WORKERS -->
+<section class="mx-auto max-w-6xl px-4 py-20">
+  <div class="reveal flex items-end justify-between">
+    <div>
+      <p class="chip w-fit">Top rated</p>
+      <h2 class="mt-4 font-display text-3xl font-bold text-white sm:text-4xl">Recently verified professionals</h2>
+    </div>
+    <a href="{% url 'jobs:job_list' %}" class="hidden text-sm font-medium text-cyan-glow hover:underline sm:block">Browse all &rarr;</a>
+  </div>
+
+  <div class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+    {% for w in top_workers %}
+    <div class="reveal glass-card p-6" data-tilt>
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <span class="grid h-11 w-11 place-items-center rounded-full bg-gradient-to-br from-violet-glow to-cyan-glow font-display text-sm font-bold text-ink-950">
+            {{ w.user.first_name|slice:":1"|default:w.user.username|slice:":1"|upper }}
+          </span>
+          <div>
+            <p class="text-sm font-semibold text-white">{{ w.user.get_full_name|default:w.user.username }}</p>
+            <p class="text-xs text-white/50">{{ w.skill_category }} &middot; {{ w.city }}</p>
+          </div>
+        </div>
+        <span class="chip !px-2.5 !py-1 text-cyan-glow">
+          <i data-lucide="shield-check" class="h-3 w-3"></i>
+          {{ w.trust_score }}
+        </span>
+      </div>
+      <div class="mt-4 flex items-center justify-between text-xs text-white/50">
+        <span>{{ w.experience_years }} yrs experience</span>
+        <span>&#8377;{{ w.daily_wage }}/day</span>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
+
+<!-- CTA BANNER -->
+<section class="mx-auto max-w-6xl px-4 py-10">
+  <div class="reveal glass-card relative overflow-hidden px-8 py-14 text-center sm:px-16">
+    <div class="glow-orb absolute -top-20 left-1/2 h-72 w-72 -translate-x-1/2 rounded-full bg-violet-glow"></div>
+    <h2 class="relative font-display text-3xl font-bold text-white sm:text-4xl">Ready to build your crew, or your career?</h2>
+    <p class="relative mx-auto mt-4 max-w-lg text-white/60">Join the network built to get skilled workers paid fairly, and get jobs done right the first time.</p>
+    <div class="relative mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+      <a href="{% url 'core:register_worker' %}" class="btn-primary">Create worker profile</a>
+      <a href="{% url 'core:register_employer' %}" class="btn-ghost">Post a job</a>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

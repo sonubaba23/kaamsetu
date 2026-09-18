@@ -1,0 +1,25 @@
+<header class="sticky top-0 z-50 px-4 pt-4">
+  <nav class="glass-nav mx-auto flex max-w-6xl items-center justify-between rounded-2xl px-5 py-3">
+    <a href="{% url 'core:landing' %}" class="flex items-center gap-2">
+      <span class="grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-br from-cyan-glow to-violet-glow font-display text-lg font-bold text-ink-950">K</span>
+      <span class="font-display text-lg font-bold tracking-tight text-white">Kaam<span class="text-gradient">Setu</span></span>
+    </a>
+
+    <div class="hidden items-center gap-1 md:flex">
+      <a href="{% url 'core:landing' %}#how-it-works" class="rounded-full px-4 py-2 text-sm font-medium text-white/70 transition hover:bg-white/5 hover:text-white">How it works</a>
+      <a href="{% url 'core:landing' %}#trades" class="rounded-full px-4 py-2 text-sm font-medium text-white/70 transition hover:bg-white/5 hover:text-white">Trades</a>
+      <a href="{% url 'jobs:job_list' %}" class="rounded-full px-4 py-2 text-sm font-medium text-white/70 transition hover:bg-white/5 hover:text-white">Find work</a>
+      <a href="{% url 'core:landing' %}#trust" class="rounded-full px-4 py-2 text-sm font-medium text-white/70 transition hover:bg-white/5 hover:text-white">Trust &amp; safety</a>
+    </div>
+
+    <div class="flex items-center gap-2">
+      {% if user.is_authenticated %}
+        <a href="{% url 'core:dashboard_redirect' %}" class="btn-ghost !px-5 !py-2 text-sm">Dashboard</a>
+        <a href="{% url 'core:logout' %}" class="rounded-full px-4 py-2 text-sm font-medium text-white/60 transition hover:text-white">Logout</a>
+      {% else %}
+        <a href="{% url 'core:login' %}" class="rounded-full px-4 py-2 text-sm font-medium text-white/70 transition hover:text-white">Log in</a>
+        <a href="{% url 'core:register_choice' %}" class="btn-primary !px-5 !py-2 text-sm">Get started</a>
+      {% endif %}
+    </div>
+  </nav>
+</header>

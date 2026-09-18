@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Join as a worker — KaamSetu{% endblock %}
+{% block content %}
+<section class="mx-auto max-w-xl px-4 py-16">
+  <div class="reveal glass-card p-8">
+    <p class="chip w-fit"><i data-lucide="hard-hat" class="h-3.5 w-3.5 text-cyan-glow"></i> Worker profile</p>
+    <h1 class="mt-4 font-display text-2xl font-bold text-white">Create your worker profile</h1>
+    <p class="mt-2 text-sm text-white/50">Your profile goes live after verification. Add your portfolio once you're in.</p>
+
+    <form method="post" class="mt-6 space-y-4">
+      {% csrf_token %}
+      <div class="grid gap-4 sm:grid-cols-2">
+        {% include "partials/field.html" with field=form.first_name %}
+        {% include "partials/field.html" with field=form.last_name %}
+      </div>
+      {% include "partials/field.html" with field=form.username %}
+      <div class="grid gap-4 sm:grid-cols-2">
+        {% include "partials/field.html" with field=form.phone_number %}
+        {% include "partials/field.html" with field=form.city %}
+      </div>
+      <div class="grid gap-4 sm:grid-cols-3">
+        {% include "partials/field.html" with field=form.skill_category %}
+        {% include "partials/field.html" with field=form.experience_years %}
+        {% include "partials/field.html" with field=form.daily_wage %}
+      </div>
+      <div class="grid gap-4 sm:grid-cols-2">
+        {% include "partials/field.html" with field=form.password1 %}
+        {% include "partials/field.html" with field=form.password2 %}
+      </div>
+      <button type="submit" class="btn-primary w-full">Create profile</button>
+    </form>
+
+    <p class="mt-6 text-center text-sm text-white/50">
+      Hiring instead? <a href="{% url 'core:register_employer' %}" class="font-medium text-cyan-glow hover:underline">Post a job</a>
+    </p>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}{{ job.title }} — KaamSetu{% endblock %}
+{% block content %}
+<section class="mx-auto max-w-3xl px-4 py-14">
+  <div class="reveal glass-card p-8">
+    <span class="chip !px-2.5 !py-1 text-[11px]">{{ job.skill_category }}</span>
+    <h1 class="mt-4 font-display text-2xl font-bold text-white">{{ job.title }}</h1>
+    <p class="mt-1 text-sm text-white/50">{{ job.city }} &middot; Posted by {{ job.employer }}</p>
+    <p class="mt-6 whitespace-pre-line text-sm leading-relaxed text-white/70">{{ job.description }}</p>
+    <div class="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-3">
+      <div>
+        <p class="text-xs text-white/45">Budget</p>
+        <p class="mt-1 text-sm font-medium text-white">&#8377;{{ job.budget_min }} &ndash; &#8377;{{ job.budget_max }}</p>
+      </div>
+      <div>
+        <p class="text-xs text-white/45">Wage type</p>
+        <p class="mt-1 text-sm font-medium text-white">{{ job.get_wage_type_display }}</p>
+      </div>
+      <div>
+        <p class="text-xs text-white/45">Workers needed</p>
+        <p class="mt-1 text-sm font-medium text-white">{{ job.workers_required }}</p>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

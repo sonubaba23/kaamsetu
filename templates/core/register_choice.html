@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Join KaamSetu{% endblock %}
+{% block content %}
+<section class="mx-auto flex min-h-[70vh] max-w-3xl flex-col justify-center px-4 py-16">
+  <div class="reveal mx-auto max-w-lg text-center">
+    <h1 class="font-display text-3xl font-bold text-white">How will you use KaamSetu?</h1>
+    <p class="mt-3 text-white/55">Choose the account type that fits you &mdash; you can always switch later.</p>
+  </div>
+
+  <div class="mt-10 grid gap-5 sm:grid-cols-2">
+    <a href="{% url 'core:register_worker' %}" class="reveal glass-card group p-8 text-center transition hover:-translate-y-1" data-tilt>
+      <span class="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-gradient-to-br from-cyan-glow/25 to-violet-glow/25 text-cyan-glow">
+        <i data-lucide="hard-hat" class="h-7 w-7"></i>
+      </span>
+      <p class="mt-5 text-lg font-semibold text-white">I'm a worker</p>
+      <p class="mt-2 text-sm text-white/55">Build a verified profile, showcase your work, and get matched with jobs near you.</p>
+    </a>
+    <a href="{% url 'core:register_employer' %}" class="reveal glass-card group p-8 text-center transition hover:-translate-y-1" data-tilt>
+      <span class="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-gradient-to-br from-violet-glow/25 to-amber-glow/25 text-violet-glow">
+        <i data-lucide="briefcase" class="h-7 w-7"></i>
+      </span>
+      <p class="mt-5 text-lg font-semibold text-white">I'm hiring</p>
+      <p class="mt-2 text-sm text-white/55">Post jobs or search verified workers directly, and pay safely through escrow.</p>
+    </a>
+  </div>
+
+  <p class="reveal mt-8 text-center text-sm text-white/50">
+    Already have an account?
+    <a href="{% url 'core:login' %}" class="font-medium text-cyan-glow hover:underline">Log in</a>
+  </p>
+</section>
+{% endblock %}

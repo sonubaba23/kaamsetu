@@ -1,0 +1,41 @@
+{% if color == "cyan" %}
+  {% with icon_cls="text-cyan-glow" bg_cls="from-cyan-glow/20 to-cyan-glow/5" %}
+  <div class="reveal glass-card p-6" data-tilt>
+    <span class="grid h-12 w-12 place-items-center rounded-2xl bg-gradient-to-br {{ bg_cls }} {{ icon_cls }}">
+      <i data-lucide="{{ icon }}" class="h-5 w-5"></i>
+    </span>
+    <p class="mt-4 text-base font-semibold text-white">{{ title }}</p>
+    <p class="mt-2 text-sm leading-relaxed text-white/55">{{ desc }}</p>
+  </div>
+  {% endwith %}
+{% elif color == "violet" %}
+  {% with icon_cls="text-violet-glow" bg_cls="from-violet-glow/20 to-violet-glow/5" %}
+  <div class="reveal glass-card p-6" data-tilt>
+    <span class="grid h-12 w-12 place-items-center rounded-2xl bg-gradient-to-br {{ bg_cls }} {{ icon_cls }}">
+      <i data-lucide="{{ icon }}" class="h-5 w-5"></i>
+    </span>
+    <p class="mt-4 text-base font-semibold text-white">{{ title }}</p>
+    <p class="mt-2 text-sm leading-relaxed text-white/55">{{ desc }}</p>
+  </div>
+  {% endwith %}
+{% elif color == "amber" %}
+  {% with icon_cls="text-amber-glow" bg_cls="from-amber-glow/20 to-amber-glow/5" %}
+  <div class="reveal glass-card p-6" data-tilt>
+    <span class="grid h-12 w-12 place-items-center rounded-2xl bg-gradient-to-br {{ bg_cls }} {{ icon_cls }}">
+      <i data-lucide="{{ icon }}" class="h-5 w-5"></i>
+    </span>
+    <p class="mt-4 text-base font-semibold text-white">{{ title }}</p>
+    <p class="mt-2 text-sm leading-relaxed text-white/55">{{ desc }}</p>
+  </div>
+  {% endwith %}
+{% else %}
+  {% with icon_cls="text-rose-glow" bg_cls="from-rose-glow/20 to-rose-glow/5" %}
+  <div class="reveal glass-card p-6" data-tilt>
+    <span class="grid h-12 w-12 place-items-center rounded-2xl bg-gradient-to-br {{ bg_cls }} {{ icon_cls }}">
+      <i data-lucide="{{ icon }}" class="h-5 w-5"></i>
+    </span>
+    <p class="mt-4 text-base font-semibold text-white">{{ title }}</p>
+    <p class="mt-2 text-sm leading-relaxed text-white/55">{{ desc }}</p>
+  </div>
+  {% endwith %}
+{% endif %}

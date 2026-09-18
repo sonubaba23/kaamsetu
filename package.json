@@ -1,0 +1,13 @@
+{
+  "name": "kaamsetu",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build:css": "tailwindcss -i ./static_src/input.css -o ./static/css/output.css --minify",
+    "watch:css": "tailwindcss -i ./static_src/input.css -o ./static/css/output.css --watch"
+  },
+  "devDependencies": {
+    "tailwindcss": "^4",
+    "@tailwindcss/cli": "^4"
+  }
+}

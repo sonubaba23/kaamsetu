@@ -1,0 +1,38 @@
+{% load static %}<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{% block title %}KaamSetu — Hire Verified Blue-Collar Talent{% endblock %}</title>
+<meta name="description" content="KaamSetu connects verified masons, plumbers, electricians, painters, carpenters and welders directly with contractors and households — no middlemen.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Sora:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'css/output.css' %}">
+<link rel="icon" href="data:,">
+{% block extra_head %}{% endblock %}
+</head>
+<body class="relative min-h-screen font-sans antialiased selection:bg-violet-500/30">
+
+<div class="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
+  <div class="glow-orb absolute -top-40 -left-32 h-[32rem] w-[32rem] rounded-full bg-violet-glow"></div>
+  <div class="glow-orb absolute top-1/3 -right-40 h-[28rem] w-[28rem] rounded-full bg-cyan-glow"></div>
+  <div class="glow-orb absolute bottom-0 left-1/4 h-[24rem] w-[24rem] rounded-full bg-amber-glow opacity-20"></div>
+  <div class="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.05)_1px,transparent_0)] [background-size:32px_32px]"></div>
+</div>
+
+{% include "partials/navbar.html" %}
+
+<main>
+{% block content %}{% endblock %}
+</main>
+
+{% include "partials/footer.html" %}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+<script src="{% static 'js/animations.js' %}"></script>
+{% block extra_js %}{% endblock %}
+</body>
+</html>
