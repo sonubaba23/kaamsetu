@@ -13,7 +13,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config(
     "SECRET_KEY", default="django-insecure-*v@+5n@@0*-pe=tzrx*e0(&_76so4#)$o(vti$zs88+q4kijqc"
 )
-DEBUG = True
+DEBUG = False
 ALLOWED_HOSTS = ["*"]
 
 INSTALLED_APPS = [
@@ -26,6 +26,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "django.contrib.humanize",
     # third-party
+    "whitenoise.runserver_nostatic",
     "rest_framework",
     "corsheaders",
     "django_filters",
@@ -41,6 +42,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "corsheaders.middleware.CorsMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
