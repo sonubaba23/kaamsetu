@@ -1,8 +1,9 @@
+{% load static %}
 <header class="sticky top-0 z-50 px-4 pt-4">
   <nav class="glass-nav mx-auto flex max-w-6xl items-center justify-between rounded-2xl px-5 py-3">
     <a href="{% url 'core:landing' %}" class="flex items-center gap-2">
-      <span class="grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-br from-cyan-glow to-violet-glow font-display text-lg font-bold text-ink-950">K</span>
-      <span class="font-display text-lg font-bold tracking-tight text-white">Kaam<span class="text-gradient">Setu</span></span>
+      <img src="{% static 'img/logo.svg' %}" alt="" class="h-9 w-9 rounded-xl">
+      <span class="font-display text-lg font-bold tracking-tight text-white">Workers<span class="text-gradient">Grid</span></span>
     </a>
 
     <div class="hidden items-center gap-1 md:flex">

@@ -5,10 +5,10 @@ from apps.core.models import SkillCategory, User
 
 
 @admin.register(User)
-class KaamSetuUserAdmin(UserAdmin):
+class WorkersGridUserAdmin(UserAdmin):
     list_display = ("username", "email", "role", "phone_number", "is_phone_verified", "is_staff")
     fieldsets = UserAdmin.fieldsets + (
-        ("KaamSetu", {"fields": ("role", "phone_number", "is_phone_verified")}),
+        ("WorkersGrid", {"fields": ("role", "phone_number", "is_phone_verified")}),
     )
 
 

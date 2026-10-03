@@ -1,10 +1,10 @@
 {% extends "base.html" %}
-{% block title %}Log in — KaamSetu{% endblock %}
+{% block title %}Log in — WorkersGrid{% endblock %}
 {% block content %}
 <section class="mx-auto flex min-h-[70vh] max-w-md flex-col justify-center px-4 py-16">
   <div class="reveal glass-card p-8">
     <p class="chip w-fit">Welcome back</p>
-    <h1 class="mt-4 font-display text-2xl font-bold text-white">Log in to KaamSetu</h1>
+    <h1 class="mt-4 font-display text-2xl font-bold text-white">Log in to WorkersGrid</h1>
 
     {% if form.errors %}
     <div class="mt-4 rounded-xl border border-rose-glow/30 bg-rose-glow/10 px-4 py-3 text-sm text-rose-glow">
@@ -29,7 +29,7 @@
     </form>
 
     <p class="mt-6 text-center text-sm text-white/50">
-      New to KaamSetu?
+      New to WorkersGrid?
       <a href="{% url 'core:register_choice' %}" class="font-medium text-cyan-glow hover:underline">Create an account</a>
     </p>
   </div>

@@ -28,7 +28,7 @@ class LandingView(TemplateView):
         return ctx
 
 
-class KaamSetuLoginView(LoginView):
+class WorkersGridLoginView(LoginView):
     template_name = "core/login.html"
     redirect_authenticated_user = True
 
