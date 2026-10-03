@@ -1,5 +1,5 @@
 """
-Django settings for the KaamSetu project.
+Django settings for the WorkersGrid project.
 """
 
 from datetime import timedelta
@@ -52,7 +52,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-ROOT_URLCONF = "kaamsetu.urls"
+ROOT_URLCONF = "workersgrid.urls"
 
 TEMPLATES = [
     {
@@ -69,8 +69,8 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "kaamsetu.wsgi.application"
-ASGI_APPLICATION = "kaamsetu.asgi.application"
+WSGI_APPLICATION = "workersgrid.wsgi.application"
+ASGI_APPLICATION = "workersgrid.asgi.application"
 
 CHANNEL_LAYERS = {
     "default": {
@@ -84,7 +84,7 @@ if config("DB_ENGINE", default="sqlite") == "postgres":
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.postgresql",
-            "NAME": config("DB_NAME", default="kaamsetu"),
+            "NAME": config("DB_NAME", default="workersgrid"),
             "USER": config("DB_USER", default="postgres"),
             "PASSWORD": config("DB_PASSWORD", default=""),
             "HOST": config("DB_HOST", default="localhost"),
@@ -154,8 +154,8 @@ ML_MODELS_DIR = BASE_DIR / "ml_artifacts"
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
 # Celery (scheduled ML jobs, e.g. demand forecasting). Run a broker locally with
-# `redis-server`, then `celery -A kaamsetu worker -l info` and
-# `celery -A kaamsetu beat -l info` to execute the schedule below.
+# `redis-server`, then `celery -A workersgrid worker -l info` and
+# `celery -A workersgrid beat -l info` to execute the schedule below.
 CELERY_BROKER_URL = config("CELERY_BROKER_URL", default="redis://localhost:6379/0")
 CELERY_RESULT_BACKEND = config("CELERY_RESULT_BACKEND", default="redis://localhost:6379/0")
 CELERY_ACCEPT_CONTENT = ["json"]

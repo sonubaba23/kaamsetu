@@ -1,5 +1,5 @@
 """
-ASGI config for kaamsetu project.
+ASGI config for workersgrid project.
 """
 
 import os
@@ -8,7 +8,7 @@ from channels.auth import AuthMiddlewareStack
 from channels.routing import ProtocolTypeRouter, URLRouter
 from django.core.asgi import get_asgi_application
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "kaamsetu.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "workersgrid.settings")
 
 django_asgi_app = get_asgi_application()
 
