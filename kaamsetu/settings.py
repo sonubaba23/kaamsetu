@@ -13,8 +13,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config(
     "SECRET_KEY", default="django-insecure-*v@+5n@@0*-pe=tzrx*e0(&_76so4#)$o(vti$zs88+q4kijqc"
 )
-DEBUG = False
-ALLOWED_HOSTS = ["*"]
+DEBUG = config("DEBUG", default=False, cast=bool)
+ALLOWED_HOSTS = config("ALLOWED_HOSTS", default="*", cast=Csv())
 
 INSTALLED_APPS = [
     "daphne",
@@ -116,6 +116,12 @@ USE_TZ = True
 STATIC_URL = "static/"
 STATICFILES_DIRS = [BASE_DIR / "static"]
 STATIC_ROOT = BASE_DIR / "staticfiles"
+
+# Let WhiteNoise fall back to the staticfiles finders (STATICFILES_DIRS) when a
+# file hasn't been collected into STATIC_ROOT yet — avoids needing to run
+# `collectstatic` after every local change.
+WHITENOISE_USE_FINDERS = True
+WHITENOISE_AUTOREFRESH = DEBUG
 
 MEDIA_URL = "media/"
 MEDIA_ROOT = BASE_DIR / "media"

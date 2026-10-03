@@ -10,6 +10,23 @@
       <p class="text-sm font-medium text-white">{{ b.worker }}</p>
       <p class="mt-0.5 text-xs text-white/45">{{ b.job.title }}</p>
       <p class="mt-1 text-xs text-white/50">{{ b.worker.skill_category }} &middot; &#8377;{{ b.agreed_wage }}</p>
+      {% if b.status == "requested" %}
+      <div class="mt-2 flex gap-2">
+        <form method="post" action="{% url 'jobs:booking_action' b.pk 'accept' %}">
+          {% csrf_token %}
+          <button type="submit" class="chip !px-2.5 !py-1 text-[10px] text-cyan-glow transition hover:bg-white/10">Accept</button>
+        </form>
+        <form method="post" action="{% url 'jobs:booking_action' b.pk 'reject' %}">
+          {% csrf_token %}
+          <button type="submit" class="chip !px-2.5 !py-1 text-[10px] text-rose-glow transition hover:bg-white/10">Reject</button>
+        </form>
+      </div>
+      {% elif b.status == "accepted" or b.status == "in_progress" %}
+      <form method="post" action="{% url 'jobs:booking_action' b.pk 'complete' %}" class="mt-2">
+        {% csrf_token %}
+        <button type="submit" class="chip !px-2.5 !py-1 text-[10px] text-violet-glow transition hover:bg-white/10">Mark complete</button>
+      </form>
+      {% endif %}
     </div>
     {% empty %}
     <p class="text-xs text-white/35">Nothing here yet.</p>

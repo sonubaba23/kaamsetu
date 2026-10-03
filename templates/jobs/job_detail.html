@@ -21,6 +21,22 @@
         <p class="mt-1 text-sm font-medium text-white">{{ job.workers_required }}</p>
       </div>
     </div>
+
+    {% if user.role == "worker" %}
+      {% if my_booking %}
+      <p class="mt-8 chip w-fit">You applied &middot; {{ my_booking.get_status_display }}</p>
+      {% elif job.status == "open" %}
+      <form method="post" action="{% url 'jobs:job_apply' job.pk %}" class="mt-8">
+        {% csrf_token %}
+        <button type="submit" class="btn-primary w-fit">
+          <i data-lucide="send" class="h-4 w-4"></i>
+          Apply for this job
+        </button>
+      </form>
+      {% else %}
+      <p class="mt-8 text-sm text-white/40">This job is no longer open for applications.</p>
+      {% endif %}
+    {% endif %}
   </div>
 </section>
 {% endblock %}

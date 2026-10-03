@@ -37,6 +37,17 @@
     color: #fff;
   }
 
+  /* Native <select> popups default to the OS theme (usually white-on-white
+     against our white text), which makes options unreadable/unselectable.
+     Force the dropdown itself dark so choices are visible in every browser. */
+  select {
+    color-scheme: dark;
+  }
+  select option {
+    background-color: var(--color-ink-800);
+    color: #e7e9f3;
+  }
+
   ::-webkit-scrollbar {
     width: 10px;
   }

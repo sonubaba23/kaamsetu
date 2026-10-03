@@ -24,7 +24,7 @@
       <h1 class="mt-3 font-display text-3xl font-bold text-white">Welcome back, {{ request.user.first_name|default:request.user.username }}</h1>
       <p class="mt-1 text-sm text-white/50">{{ employer.city }}{% if employer.company_name %} &middot; {{ employer.company_name }}{% endif %}</p>
     </div>
-    <a href="#" class="btn-primary w-fit">
+    <a href="{% url 'jobs:job_create' %}" class="btn-primary w-fit">
       <i data-lucide="plus" class="h-4 w-4"></i>
       Post a job
     </a>
@@ -43,6 +43,25 @@
     <div class="glass-card p-6">
       <p class="text-xs text-white/50">Total spend</p>
       <p class="mt-2 font-display text-3xl font-bold text-white">&#8377;{{ stats.total_spend }}</p>
+    </div>
+  </div>
+
+  <!-- Your job posts -->
+  <div class="reveal mt-6 glass-card p-6">
+    <div class="flex items-center justify-between">
+      <p class="text-sm font-semibold text-white">Your job posts</p>
+      <i data-lucide="list-checks" class="h-4 w-4 text-cyan-glow"></i>
+    </div>
+    <div class="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+      {% for job in jobs %}
+      <a href="{% url 'jobs:job_detail' job.pk %}" class="rounded-2xl border border-white/8 bg-white/[0.03] p-4 transition hover:border-white/20">
+        <span class="chip !px-2 !py-0.5 text-[10px]">{{ job.skill_category }}</span>
+        <p class="mt-2 text-sm font-medium text-white">{{ job.title }}</p>
+        <p class="mt-1 text-xs text-white/45">{{ job.get_status_display }} &middot; {{ job.bookings.count }} applicant{{ job.bookings.count|pluralize }}</p>
+      </a>
+      {% empty %}
+      <p class="col-span-full text-sm text-white/40">No jobs posted yet — click "Post a job" above to get started.</p>
+      {% endfor %}
     </div>
   </div>
 
